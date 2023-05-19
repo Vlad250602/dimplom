@@ -1,90 +1,114 @@
-<x-laravel-ui-adminlte::adminlte-layout>
+@extends('layouts.main-layout')
 
-    <body class="hold-transition register-page">
-        <div class="register-box">
-            <div class="register-logo">
-                <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
-            </div>
-
-            <div class="card">
-                <div class="card-body register-card-body">
-                    <p class="login-box-msg">Register a new membership</p>
-
-                    <form method="post" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="input-group mb-3">
-                            <input type="text" name="name"
-                                class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                placeholder="Full name">
-                            <div class="input-group-append">
-                                <div class="input-group-text"><span class="fas fa-user"></span></div>
-                            </div>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+@section('content')
+    <main class="main-content">
+        <!--== Start Page Header Area Wrapper ==-->
+        <div class="page-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="page-header-content">
+                            <nav class="breadcrumb-area">
+                                <ul class="breadcrumb">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-sep">/</li>
+                                    <li>Account</li>
+                                </ul>
+                            </nav>
+                            <h4 class="title">Account</h4>
                         </div>
-
-                        <div class="input-group mb-3">
-                            <input type="email" name="email" value="{{ old('email') }}"
-                                class="form-control @error('email') is-invalid @enderror" placeholder="Email">
-                            <div class="input-group-append">
-                                <div class="input-group-text"><span class="fas fa-envelope"></span></div>
-                            </div>
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <input type="password" name="password"
-                                class="form-control @error('password') is-invalid @enderror" placeholder="Password">
-                            <div class="input-group-append">
-                                <div class="input-group-text"><span class="fas fa-lock"></span></div>
-                            </div>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <input type="password" name="password_confirmation" class="form-control"
-                                placeholder="Retype password">
-                            <div class="input-group-append">
-                                <div class="input-group-text"><span class="fas fa-lock"></span></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                                    <label for="agreeTerms">
-                                        I agree to the <a href="#">terms</a>
-                                    </label>
-                                </div>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Register</button>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    </form>
-
-                    <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
+                    </div>
                 </div>
-                <!-- /.form-box -->
-            </div><!-- /.card -->
-
-            <!-- /.form-box -->
+            </div>
         </div>
-        <!-- /.register-box -->
-    </body>
-</x-laravel-ui-adminlte::adminlte-layout>
+        <!--== End Page Header Area Wrapper ==-->
+
+        <!--== Start Account Area Wrapper ==-->
+        <section class="account-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8 m-auto">
+                        <div class="account-form-wrap">
+                            <!--== Start Register Form ==-->
+                            <div class="login-form">
+                                <div class="content">
+                                    <h4 class="title">Registration</h4>
+                                    <p>Please register using account detail bellow.</p>
+                                </div>
+                                {{-- @if ($errors)
+                                     <ul>
+                                         @foreach ($errors->all() as $error)
+                                             <li>{{ $error }}</li>
+                                         @endforeach
+                                     </ul>
+                                 @endif--}}
+                                <form method="post" action="{{ url('/register') }}">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input value="{{ old('name') }}" name="name" type="text" placeholder="First name"
+                                                       class="form-control @error('name') is-invalid @enderror">
+                                                @error('name')
+                                                <div style="color: lightcoral">Name incorrect</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input value="{{ old('surname') }}" name="surname" type="text" placeholder="Second name"
+                                                       class="form-control @error('surname') is-invalid @enderror">
+                                                @error('surname')
+                                                <div style="color: lightcoral">Surname incorrect</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input value="{{ old('email') }}" name="email" type="email" placeholder="Email"
+                                                       class="form-control @error('email') is-invalid @enderror">
+                                                @error('email')
+                                                <div style="color: lightcoral">Email incorrect</div>
+                                                @enderror
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="password" name="password" placeholder="Password"
+                                                       class="form-control @error('password') is-invalid @enderror">
+                                                @error('password')
+                                                <div style="color: lightcoral">Password incorrect</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="password" name="password_confirmation" class="form-control"
+                                                       placeholder="Retype password">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="login-form-group">
+                                                <button class="btn-sign" type="submit">Sign Up</button>
+                                                <a class="btn-pass-forgot" href="{{ route('login') }}">Already have account?</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <!--== End Login Form ==-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Account Area Wrapper ==-->
+    </main>
+@endsection

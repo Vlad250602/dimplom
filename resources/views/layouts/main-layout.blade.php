@@ -87,42 +87,68 @@
                 <div class="col-sm-7 col-lg-2 d-none d-sm-block text-end">
                     <div class="header-action-area">
                         <ul class="header-action">
+                            <li class="currency-menu">
+                                <a class="action-item" href="#/"><i class="zmdi zmdi-account icon"></i></a>
+                                <ul class="currency-dropdown">
+                                    <li class="account">
+                                        <a href="#/"><span class="current-account">My account</span></a>
+                                        <ul>
+                                            @if (Route::has('login'))
+                                                @auth
+                                                <li><a href="{{route('home')}}">{{Auth::user()->name}} {{Auth::user()->surname}}</a></li>
+                                                <li>
+                                                    <a style="cursor: pointer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                        Sign out
+                                                    </a>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                                @else
+                                                    <li><a href="{{route('login')}}">Login</a></li>
+                                                    @if (Route::has('register'))
+                                                        <li><a href="{{route('register')}}">Register</a></li>
+                                                     @endif
+                                                @endauth
+                                            @endif
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            @if(Auth::user())
                             <li class="mini-cart">
                                 <a class="action-item" href="#/">
-                                    <i class="zmdi zmdi-account icon"></i>
+                                    <i class="zmdi zmdi-shopping-cart-plus icon"></i>
+                                    <span class="cart-quantity">{{$total->count()}}</span>
                                 </a>
                                 <div class="mini-cart-dropdown">
-                                    <div class="cart-item">
-                                        <div class="thumb">
-                                            <img class="w-100" src="assets/img/shop/cart/1.jpg" alt="Image-HasTech">
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="#/">Literature Classical - s</a></h5>
-                                            <span class="product-quantity">1 ×</span>
-                                            <span class="product-price">$79.00</span>
-                                            <a class="cart-trash" href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </div>
+                                    @foreach($products as $product)
                                     <div class="cart-item">
                                         <div class="thumb">
                                             <img class="w-100" src="assets/img/shop/cart/2.jpg" alt="Image-HasTech">
                                         </div>
                                         <div class="content">
-                                            <h5 class="title"><a href="#/">Fit Wool Suit - m / gold</a></h5>
-                                            <span class="product-quantity">1 ×</span>
-                                            <span class="product-price">$80.00</span>
+                                            <h5 class="title"><a href="#/">{{$product->product_name}}</a></h5>
+                                            <span class="product-quantity">{{$product->count}} ×</span>
+                                            <span class="product-price">{{$product->price}}₴</span>
                                             <a class="cart-trash" href="javascript:void(0);"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </div>
+                                    @endforeach
                                     <div class="cart-total-money">
-                                        <h5>Total: <span class="money">$159.00</span></h5>
+                                        <h5>Total: <span class="money">{{$total->sum('price')}}₴</span></h5>
                                     </div>
+                                        @if ($total->count() !== 0)
                                     <div class="cart-btn">
-                                        <a href="/cart">View Cart</a>
-                                        <a href="/checkout">Checkout</a>
+                                        <a href="{{route('cart')}}">View Cart</a>
+                                        <a href="{{route('checkout')}}">Checkout</a>
                                     </div>
+                                        @else
+                                            <div style="text-align: center; margin-top: 10px">Your cart is empty</div>
+                                        @endif
                                 </div>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </div>

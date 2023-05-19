@@ -5,9 +5,17 @@
         <p>Home</p>
     </a>
 </li>
+
 <li class="nav-item">
     <a href="{{ route('admin-products') }}" class="nav-link {{ Request::is('admin-products') ? 'active' : '' }}">
         <i class="nav-icon fas fa-shopping-bag"></i>
         <p>Products</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('admin-users') }}" class="nav-link {{ Request::is('admin-users') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user"></i>
+        <p>Users</p>
     </a>
 </li>

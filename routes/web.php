@@ -13,10 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
 
+//main site
+Route::get('/catalog', [App\Http\Controllers\ProductController::class, 'index'])->name('catalog');
+Route::get('/', [App\Http\Controllers\MainController::class, 'index'])->name('main');
+
+//cart
+Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+Route::post('/cart/add/{id}', [App\Http\Controllers\CartController::class, 'add'])->name('cart-add');
+
+//checkout
+Route::get('/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [App\Http\Controllers\CartController::class, 'checkout_submit'])->name('checkout-submit');
+
+
+//------------------------------------------------------------------------------------------------//
 //admin panel
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -44,7 +55,10 @@ Route::post('/admin-products/edit/{id}', [App\Http\Controllers\AdminProductsCont
 Route::get('/admin-products/delete/{id}', [App\Http\Controllers\AdminProductsController::class, 'destroy'])
     ->name('admin-products-destroy');
 
-//main site
-Route::get('/catalog', [App\Http\Controllers\ProductController::class, 'index'])->name('catalog');
+//users
+Route::get('/admin-users', [App\Http\Controllers\AdminUsersController::class, 'index'])
+    ->name('admin-users');
+
+
 
 Auth::routes();

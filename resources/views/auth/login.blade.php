@@ -1,71 +1,89 @@
-<x-laravel-ui-adminlte::adminlte-layout>
+@extends('layouts.main-layout')
 
-    <body class="hold-transition login-page">
-        <div class="login-box">
-            <div class="login-logo">
-                <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
-            </div>
-            <!-- /.login-logo -->
-
-            <!-- /.login-box-body -->
-            <div class="card">
-                <div class="card-body login-card-body">
-                    <p class="login-box-msg">Sign in to start your session</p>
-
-                    <form method="post" action="{{ url('/login') }}">
-                        @csrf
-
-                        <div class="input-group mb-3">
-                            <input type="email" name="email" value="{{ old('email') }}" placeholder="Email"
-                                class="form-control @error('email') is-invalid @enderror">
-                            <div class="input-group-append">
-                                <div class="input-group-text"><span class="fas fa-envelope"></span></div>
-                            </div>
-                            @error('email')
-                                <span class="error invalid-feedback">{{ $message }}</span>
-                            @enderror
+@section('content')
+    <main class="main-content">
+        <!--== Start Page Header Area Wrapper ==-->
+        <div class="page-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="page-header-content">
+                            <nav class="breadcrumb-area">
+                                <ul class="breadcrumb">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-sep">/</li>
+                                    <li>Account</li>
+                                </ul>
+                            </nav>
+                            <h4 class="title">Account</h4>
                         </div>
-
-                        <div class="input-group mb-3">
-                            <input type="password" name="password" placeholder="Password"
-                                class="form-control @error('password') is-invalid @enderror">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                            @error('password')
-                                <span class="error invalid-feedback">{{ $message }}</span>
-                            @enderror
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" id="remember">
-                                    <label for="remember">Remember Me</label>
-                                </div>
-                            </div>
-
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                            </div>
-
-                        </div>
-                    </form>
-
-                    <p class="mb-1">
-                        <a href="{{ route('password.request') }}">I forgot my password</a>
-                    </p>
-                    <p class="mb-0">
-                        <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-                    </p>
+                    </div>
                 </div>
-                <!-- /.login-card-body -->
             </div>
-
         </div>
-        <!-- /.login-box -->
-    </body>
-</x-laravel-ui-adminlte::adminlte-layout>
+        <!--== End Page Header Area Wrapper ==-->
+
+        <!--== Start Account Area Wrapper ==-->
+        <section class="account-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8 m-auto">
+                        <div class="account-form-wrap">
+                            <!--== Start Login Form ==-->
+                            <div class="login-form">
+                                <div class="content">
+                                    <h4 class="title">Login</h4>
+                                    <p>Please login using account detail bellow.</p>
+                                </div>
+                               {{-- @if ($errors)
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif--}}
+                                <form method="post" action="{{ url('/login') }}">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input value="{{ old('email') }}" name="email" type="email" placeholder="Email"
+                                                       class="form-control @error('email') is-invalid @enderror">
+                                                @error('email')
+                                                <div style="color: lightcoral">Email incorrect</div>
+                                                @enderror
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="password" name="password" placeholder="Password"
+                                                       class="form-control @error('password') is-invalid @enderror">
+                                                @error('password')
+                                                <div style="color: lightcoral">Password incorrect</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="login-form-group">
+                                                <button class="btn-sign" type="submit">Sign In</button>
+                                                <a class="btn-pass-forgot" href="{{ route('password.request') }}">Forgot your password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="account-optional-group">
+                                                <a class="btn-create" href="{{ route('register') }}">Create account</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--== End Login Form ==-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Account Area Wrapper ==-->
+    </main>
+@endsection

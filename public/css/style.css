@@ -383,7 +383,7 @@ section .container-fluid {
 }
 .pagination-content-wrap .pagination-nav .pagination li a:hover {
   color: #fff;
-  background-color: #333;
+  background-color: #f76b6a;
 }
 .pagination-content-wrap .pagination-nav .pagination li:last-child {
   margin-right: 0;

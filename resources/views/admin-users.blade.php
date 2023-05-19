@@ -4,13 +4,10 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <h1 class="text-black-50" style=" display: inline">Products</h1>
+            <h1 class="text-black-50" style=" display: inline">Users</h1>
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
-                        <a class="btn btn-primary" href="admin-products/create" style="margin-bottom: 10px">
-                            Add product
-                        </a>
                     {{--
                     <a href=""><button class="btn btn-block btn-primary" style=" width: 150px; margin-top: -5px; z-index: 100">Add product</button></a>
 --}}
@@ -19,40 +16,31 @@
                         <tr>
                             <th>Photo</th>
                             <th>Name</th>
-                            <th>Size</th>
-                            <th>Category</th>
-                            <th>Subcategory</th>
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Total sales</th>
-                            <th>Count</th>
+                            <th>Surname</th>
+                            <th>Email</th>
+                            <th>Role</th>
                             <th>Operation</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data as $product)
+                        @foreach($data as $user)
                             <tr>
-                                <td style="text-align: center"><img style="max-height: 40px; max-width: 40px; border-radius: 20px" src="{{ Storage::url('image/'. $product->product_name . '/'. $product->image) }}" alt=""></td>
-                                <td>{{$product->product_name}}</td>
-                                <td>{{$product->size}}m</td>
-                                <td>{{$categories->find($product->category_id)->category_name }}</td>
-                                <td>{{$subcategories->find($product->subcategory_id)->name}}</td>
-                                <td>{{$product->price}}</td>
-                                <td>{{$product->discount}}</td>
-                                <td>{{$product->total_sales}}</td>
-                                <td>{{$product->count}}</td>
+                                <td style="text-align: center"><img style="max-height: 40px; max-width: 40px; border-radius: 20px" src="{{ Storage::url('image/'. $user->name . '_'. $user->surname . '/') }}" alt=""></td>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->surname}}</td>
+                                <td>{{$user->email}}</td>
+                                <td>@if($user->admin == 0)
+                                        User
+                                    @else
+                                        Admin
+                                    @endif</td>
                                 <td style="text-align: center">
-                                    <a href="/admin-products/details/{{$product->id}}">
+                                    <a href="/admin-users/details/{{$user->id}}">
                                         <button class="btn btn-block btn-outline-secondary" style=" width:30%; display: inline-block">
                                             <i class="nav-icon fas fa-info"></i>
                                         </button>
                                     </a>
-                                    <a href="/admin-products/edit/{{$product->id}}">
-                                        <button class="btn btn-block btn-outline-primary" style=" width:30%; display: inline-block">
-                                            <i class="nav-icon fas fa-pen"></i>
-                                        </button>
-                                    </a>
-                                    <a href="/admin-products/delete/{{$product->id}}">
+                                    <a href="/admin-products/delete/{{$user->id}}">
                                         <button class="btn btn-block btn-outline-danger"  style=" width:30%; display: inline-block" >
                                             <i class="nav-icon fas fa-trash"></i>
                                         </button>

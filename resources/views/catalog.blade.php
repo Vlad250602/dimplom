@@ -36,7 +36,7 @@
                             </nav>
                         </div>
                         <div class="nav-short-area d-md-flex align-items-center">
-                            <p class="show-product">Showing 1 - 18 of 33 result</p>
+                            <p class="show-product"></p>
                             <div class="toolbar-shorter">
                                 <label for="SortBy">Sort by</label>
                                 <select id="SortBy" class="form-select" aria-label="Sort by">
@@ -62,16 +62,23 @@
                                         <div class="product-item">
                                             <div class="inner-content">
                                                 <div class="product-thumb">
-                                                    <a href="single-product-simple.html">
+                                                    <a href="/">
                                                         <img class="w-100" src="{{asset('img/shop/2.jpg')}}" alt="Image-HasTech">
                                                     </a>
+                                                    @if($product->discount > 0)
                                                     <span class="sale-title sticker">Sale</span>
-                                                    <span class="percent-count sticker">-15%</span>
+                                                    <span class="percent-count sticker">{{$product->discount}}%</span>
+                                                    @endif
                                                     <div class="product-action">
                                                         <div class="addto-wrap">
-                                                            <a class="add-cart" href="cart.html">
-                                                                <i class="zmdi zmdi-shopping-cart-plus icon"></i>
-                                                            </a>
+                                                            <form action="{{route('cart-add', $product->id)}}" method="post">
+                                                                @csrf
+                                                                <button type="submit" style="visibility: hidden">
+                                                                    <a class="add-cart">
+                                                                        <i class="zmdi zmdi-shopping-cart-plus icon"></i>
+                                                                    </a>
+                                                                </button>
+                                                            </form>
                                                             <a class="add-wishlist" href="wishlist.html">
                                                                 <i class="zmdi zmdi-favorite-outline zmdi-hc-fw icon"></i>
                                                             </a>
@@ -85,8 +92,12 @@
                                                     <div class="product-info">
                                                         <h4 class="title"><a href="single-product-simple.html">{{$product->product_name}}</a></h4>
                                                         <div class="prices">
-                                                            <span class="price">{{$product->price}}UAH</span>
-                                                            <span class="price-old"></span>
+                                                            @if($product->discount > 0)
+                                                            <span class="price">{{$product->price * (1 - $product->discount/100)}}₴</span>
+                                                            <span class="price-old">{{$product->price}}</span>
+                                                            @else
+                                                                <span class="price">{{$product->price}}₴</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -100,13 +111,16 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="pagination-content-wrap border-top">
-                                            <nav class="pagination-nav">
-                                                <ul class="pagination justify-content-center">
+                                            <nav class="pagination-nav" >
+                                                {{--<ul class="pagination justify-content-center">
                                                     <li><a class="disabled active prev" href="shop.html">Prev</a></li>
                                                     <li><a class="disabled active" href="shop.html">1</a></li>
                                                     <li><a href="shop.html">2</a></li>
                                                     <li><a class="next" href="shop.html">Next</a></li>
-                                                </ul>
+                                                </ul>--}}
+                                                <div class="pagination justify-content-center">
+                                                    {{$data->links('')}}
+                                                </div>
                                             </nav>
                                         </div>
                                     </div>

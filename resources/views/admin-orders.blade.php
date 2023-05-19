@@ -8,25 +8,23 @@
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
-                        <a class="btn btn-primary" href="admin-products/create" style="margin-bottom: 10px">
-                            Add product
-                        </a>
+
                     {{--
                     <a href=""><button class="btn btn-block btn-primary" style=" width: 150px; margin-top: -5px; z-index: 100">Add product</button></a>
 --}}
                     <table id="productTable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Photo</th>
+                            <th>Order id</th>
+                            <th>Created by</th>
+                            <th>Status</th>
                             <th>Name</th>
-                            <th>Size</th>
-                            <th>Category</th>
-                            <th>Subcategory</th>
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Total sales</th>
-                            <th>Count</th>
-                            <th>Operation</th>
+                            <th>Surname</th>
+                            <th>Country</th>
+                            <th>Town</th>
+                            <th>Address</th>
+                            <th>Pay type</th>
+                            <th>Created at</th>
                         </tr>
                         </thead>
                         <tbody>

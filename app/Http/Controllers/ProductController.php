@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = DB::table('products')->get();
-        return view('catalog', ['data' => $data]);
+        $data = Product::paginate(15);
+        if(!Auth::user()){
+            return view('catalog', ['data' => $data]);
+        }
+        $products = $this->order_products();
+        $total = $this->order_total();
+
+        return view('catalog', ['data' => $data, 'total' => $total , 'products' => $products]);
     }
 
     /**

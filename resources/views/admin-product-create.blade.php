@@ -158,11 +158,8 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea type="textarea" name="description" class="form-control" id="description" placeholder="Description">
-                    @if ($errors->has('description'))
-                        {{old('description')}}
-                    @endif
-                </textarea>
+                <textarea type="textarea" name="description" class="form-control" id="description"
+                          placeholder="Description">@if ($errors->has('description')){{old('description')}}@endif</textarea>
             </div>
         </div>
         <div class="card-footer">

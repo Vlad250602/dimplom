@@ -10,7 +10,7 @@
                     <div class="col-12 col-sm-6">
                         <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
                         <div class="col-12">
-                            <img src="../../dist/img/prod-1.jpg" class="product-image" alt="Product Image">
+                            <img src="{{Storage::url('image/products/'. $product->image)}}" class="product-image" alt="Product Image">
                         </div>
                     </div>
                     <div class="col-12 col-sm-6">
@@ -20,8 +20,6 @@
                         <h4 class="mt-3">Count: <small>{{$product->count}}</small></h4>
                         <h4 class="mt-3">Total sales: <small>{{$product->total_sales}}</small></h4>
                         <h4 class="mt-3">Category: <small>{{{$categories->find($product->category_id)->category_name }}}</small></h4>
-                        <h4 class="mt-3">Subcategory: <small>{{{$subcategories->find($product->subcategory_id)->name }}}</small></h4>
-
                         <div class="bg-gray py-2 px-3 mt-4">
                             <h2 class="mb-0">
                                 {{$product->price}}UAH

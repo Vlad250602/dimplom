@@ -37,7 +37,10 @@
                                     @foreach($products as $item)
                                     <tr>
                                         <td class="indecor-product-remove">
-                                            <a href="#/"><i class="fa fa-times"></i></a>
+                                            <form action="{{route('cart-remove', $item->id)}}" method="post">
+                                                @csrf
+                                                <button type="submit" style="border: 0; background: 0"><i class="fa fa-times"></i></button>
+                                            </form>
                                         </td>
 {{--                                        <td class="indecor-product-thumbnail">
                                             <a href="#/"><img src="assets/img/shop/cart/table1.jpg" alt="Image-HasTech"></a>
@@ -46,11 +49,8 @@
                                             <h4 class="title"><a href="/">{{$item->product_name}}</a></h4>
                                         </td>
                                         <td class="indecor-product-price"><span class="price">{{$item->price}}₴</span></td>
-                                        <td class="indecor-product-quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" id="quantity" title="Quantity" value="{{$item->count}}">
-                                            </div>
-                                        </td>
+                                        <td class="indecor-product-price"><span class="price">{{$item->count}}</span></td>
+
                                         <td class="product-subtotal"><span class="price">{{number_format($item->count * $item->price, 2, '.', '')}}₴</span></td>
                                     </tr>
                                     @endforeach
@@ -62,15 +62,15 @@
                                     <div class="coupon-all">
                                         <div class="coupon">
                                             <a class="button" href="{{route('catalog')}}">Continue Shopping</a>
-                                            <a class="button" href="#/">Clear Cart</a>
+                                            <form class="button" action="{{route('cart-clear')}}" method="post">
+                                                @csrf
+                                                <button type="submit" class="button" >Clear Cart</button>
+                                            </form>
                                             <div class="cart-coupon">
                                                 <h3>Special instructions for seller</h3>
                                                 <label for="Textarea1" class="form-label visually-hidden">Instructions Seller</label>
                                                 <textarea class="form-control" id="Textarea1"></textarea>
                                             </div>
-                                        </div>
-                                        <div class="coupon2">
-                                            <a class="button" href="#/">Update Cart</a>
                                         </div>
                                     </div>
                                 </div>

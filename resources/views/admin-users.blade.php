@@ -14,18 +14,15 @@
                     <table id="productTable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Photo</th>
                             <th>Name</th>
                             <th>Surname</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Operation</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($data as $user)
                             <tr>
-                                <td style="text-align: center"><img style="max-height: 40px; max-width: 40px; border-radius: 20px" src="{{ Storage::url('image/'. $user->name . '_'. $user->surname . '/') }}" alt=""></td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->surname}}</td>
                                 <td>{{$user->email}}</td>
@@ -34,18 +31,6 @@
                                     @else
                                         Admin
                                     @endif</td>
-                                <td style="text-align: center">
-                                    <a href="/admin-users/details/{{$user->id}}">
-                                        <button class="btn btn-block btn-outline-secondary" style=" width:30%; display: inline-block">
-                                            <i class="nav-icon fas fa-info"></i>
-                                        </button>
-                                    </a>
-                                    <a href="/admin-products/delete/{{$user->id}}">
-                                        <button class="btn btn-block btn-outline-danger"  style=" width:30%; display: inline-block" >
-                                            <i class="nav-icon fas fa-trash"></i>
-                                        </button>
-                                    </a>
-                                </td>
                             </tr>
 
                         @endforeach

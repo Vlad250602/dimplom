@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Online-shop</title>
+    <title>Ялинки.ua</title>
 
     <!--== Favicon ==-->
     <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}" type="image/x-icon" />
@@ -70,8 +70,8 @@
                 <div class="col-6 col-sm-4 col-lg-3">
                     <div class="header-logo-area">
                         <a href="/">
-                            <img class="logo-main" src="assets/img/logo.png" alt="Logo" />
-                            <img class="logo d-none" src="assets/img/logo-light.png" alt="Logo" />
+                            <img class="logo-main" src="{{asset('img/logo.png')}}" alt="Logo" />
+                            <img class="logo d-none" src="{{asset('img/logo_light.png')}}" alt="Logo" />
                         </a>
                     </div>
                 </div>
@@ -95,7 +95,10 @@
                                         <ul>
                                             @if (Route::has('login'))
                                                 @auth
+                                                    @if(Auth::user()->admin == 1 )
                                                 <li><a href="{{route('home')}}">{{Auth::user()->name}} {{Auth::user()->surname}}</a></li>
+                                                    @endif
+                                                    <li><a href="{{route('wishlist')}}">Wishlist</a></li>
                                                 <li>
                                                     <a style="cursor: pointer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         Sign out
@@ -125,13 +128,16 @@
                                     @foreach($products as $product)
                                     <div class="cart-item">
                                         <div class="thumb">
-                                            <img class="w-100" src="assets/img/shop/cart/2.jpg" alt="Image-HasTech">
+                                            <img class="w-100"  style="width: 94.75px; height: 94.75px" src="{{($product->image)? Storage::url('image/products/' . $product->image) : asset('img/shop/cart/2.jpg')}}" alt="Image-HasTech">
                                         </div>
                                         <div class="content">
                                             <h5 class="title"><a href="#/">{{$product->product_name}}</a></h5>
                                             <span class="product-quantity">{{$product->count}} ×</span>
                                             <span class="product-price">{{$product->price}}₴</span>
-                                            <a class="cart-trash" href="javascript:void(0);"><i class="fa fa-trash"></i></a>
+                                            <form action="{{route('cart-remove', $product->id)}}" method="post">
+                                                @csrf
+                                                <button style="border: 0; background: 0" class="cart-trash"><i class="fa fa-trash"></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                     @endforeach
@@ -174,14 +180,13 @@
                         <div class="widget-item">
                             <div class="about-widget">
                                 <div class="footer-logo-area">
-                                    <a href="index.html">
-                                        <img class="logo-main" src="assets/img/logo.png" alt="Logo" />
+                                    <a href="{{route('main')}}">
+                                        <img class="logo-main" src="{{asset('img/logo.png')}}" alt="Logo"></a>
                                     </a>
                                 </div>
-                                <p class="desc">Lorem ipsum dolor sit amet, consectet adipi elit, sed do eius tempor incididun ut labore gthydolore.</p>
                                 <ul>
-                                    <li><i class="ion-ios7-location-outline"></i> 184 Main Rd E, St Albans VIC 3021,</li>
-                                    <li><i class="ion-ios7-email-outline"></i> <a href="mailto://info@example.com">info@example.com</a></li>
+                                    <li><i class="ion-ios7-location-outline"></i> 95 Shevchenka St. VIC 14030,</li>
+                                    <li><i class="ion-ios7-email-outline"></i> <a>info@example.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -190,14 +195,12 @@
                     <div class="col-sm-6 col-lg-3">
                         <!--== Start widget Item ==-->
                         <div class="widget-item widget-item-one">
-                            <h4 class="widget-title">INFORMATION</h4>
+                            <h4 class="widget-title">ACCOUNT</h4>
                             <div class="widget-menu-wrap">
                                 <ul class="nav-menu">
-                                    <li><a href="shop.html">Specials</a></li>
-                                    <li><a href="shop.html">New products</a></li>
-                                    <li><a href="shop.html">Top sellers</a></li>
-                                    <li><a href="shop.html">Our stores</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
+                                    <li><a href="{{route('login')}}">Log in</a></li>
+                                    <li><a href="{{route('register')}}">Register</a></li>
+                                    <li><a href="{{route('wishlist')}}">Wishlist</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -209,47 +212,19 @@
                             <h4 class="widget-title">QUICK LINKS</h4>
                             <div class="widget-menu-wrap">
                                 <ul class="nav-menu">
-                                    <li><a href="login.html">New User</a></li>
-                                    <li><a href="about-us.html">Help Center</a></li>
-                                    <li><a href="about-us.html">Refund Policy</a></li>
-                                    <li><a href="about-us.html">Report Spam</a></li>
-                                    <li><a href="login.html">Account</a></li>
+                                    <li><a href="{{route('catalog')}}">Catalog</a></li>
+                                    <li><a href="{{route('contact')}}">Contact</a></li>
+                                    <li><a href="{{route('cart')}}">Cart</a></li>
                                 </ul>
                             </div>
                         </div>
                         <!--== End widget Item ==-->
                     </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <!--== Start widget Item ==-->
-                        <div class="widget-item">
-                            <h4 class="widget-title">newsletter</h4>
-                            <div class="widget-newsletter">
-                                <p>Sign up for our newsletter & promotions</p>
-                                <div class="newsletter-form">
-                                    <form>
-                                        <input type="email" class="form-control" placeholder="email@example.com">
-                                        <button class="btn-submit" type="button">Subscribe</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!--== End widget Item ==-->
-                    </div>
+
                 </div>
             </div>
 
         </div>
-        <!--== Start Footer Bottom ==-->
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <p class="copyright">© 2021, <span>Julie</span>. Made with <i class="fa fa-heart icon-heart"></i> by <a target="_blank" href="https://themeforest.net/user/codecarnival/portfolio"> Codecarnival</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--== End Footer Bottom ==-->
     </footer>
     <!--== End Footer Area Wrapper ==-->
 
@@ -261,29 +236,30 @@
 <!--=======================Javascript============================-->
 
 <!--=== jQuery Modernizr Min Js ===-->
-<script src="assets/js/modernizr.js"></script>
+<script src="{{asset('js/modernizr.js')}}"></script>
 <!--=== jQuery Min Js ===-->
-<script src="assets/js/jquery-main.js"></script>
+<script src="{{asset('js/jquery-main.js')}}"></script>
 <!--=== jQuery Migration Min Js ===-->
-<script src="assets/js/jquery-migrate.js"></script>
+<script src="{{asset('js/jquery-migrate.js')}}"></script>
 <!--=== jQuery Popper Min Js ===-->
-<script src="assets/js/popper.min.js"></script>
+<script src="{{asset('js/popper.min.js')}}"></script>
 <!--=== jQuery Bootstrap Min Js ===-->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
 <!--=== jQuery Headroom Min Js ===-->
-<script src="assets/js/headroom.min.js"></script>
+<script src="{{asset('js/headroom.min.js')}}"></script>
 <!--=== jQuery Swiper Min Js ===-->
-<script src="assets/js/swiper.min.js"></script>
+<script src="{{asset('js/swiper.min.js')}}"></script>
 <!--=== jQuery Fancybox Min Js ===-->
-<script src="assets/js/fancybox.min.js"></script>
+<script src="{{asset('js/fancybox.min.js')}}"></script>
 <!--=== jQuery Slick Nav Js ===-->
-<script src="assets/js/slicknav.js"></script>
+<script src="{{asset('js/slicknav.js')}}"></script>
 <!--=== jQuery Countdown Js ===-->
-<script src="assets/js/countdown.js"></script>
+<script src="{{asset('js/countdown.js')}}"></script>
 
 <!--=== jQuery Custom Js ===-->
-<script src="assets/js/custom.js"></script>
+<script src="{{asset('js/custom.js')}}"></script>
 
+@yield('custom_js')
 </body>
 
 </html>

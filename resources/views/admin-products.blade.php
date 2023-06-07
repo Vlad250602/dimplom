@@ -21,9 +21,8 @@
                             <th>Name</th>
                             <th>Size</th>
                             <th>Category</th>
-                            <th>Subcategory</th>
                             <th>Price</th>
-                            <th>Discount</th>
+                            <th>Discount price</th>
                             <th>Total sales</th>
                             <th>Count</th>
                             <th>Operation</th>
@@ -32,28 +31,32 @@
                         <tbody>
                         @foreach($data as $product)
                             <tr>
-                                <td style="text-align: center"><img style="max-height: 40px; max-width: 40px; border-radius: 20px" src="{{ Storage::url('image/'. $product->product_name . '/'. $product->image) }}" alt=""></td>
+                                <td style="text-align: center"><img style="max-height: 40px; max-width: 40px; " src="{{ Storage::url('image/products/'. $product->image) }}" alt=""></td>
                                 <td>{{$product->product_name}}</td>
                                 <td>{{$product->size}}m</td>
                                 <td>{{$categories->find($product->category_id)->category_name }}</td>
-                                <td>{{$subcategories->find($product->subcategory_id)->name}}</td>
                                 <td>{{$product->price}}</td>
-                                <td>{{$product->discount}}</td>
+                                <td>{{number_format($product->discount_price,2  )}}</td>
                                 <td>{{$product->total_sales}}</td>
                                 <td>{{$product->count}}</td>
                                 <td style="text-align: center">
+                                    <a href="/admin-products/edit-count/{{$product->id}}">
+                                        <button class="btn btn-block btn-outline-info" style="width:20%; display: inline-block">
+                                            <i class="nav-icon fas fa-calendar"></i>
+                                        </button>
+                                    </a>
                                     <a href="/admin-products/details/{{$product->id}}">
-                                        <button class="btn btn-block btn-outline-secondary" style=" width:30%; display: inline-block">
+                                        <button class="btn btn-block btn-outline-secondary" style="width:20%; display: inline-block">
                                             <i class="nav-icon fas fa-info"></i>
                                         </button>
                                     </a>
                                     <a href="/admin-products/edit/{{$product->id}}">
-                                        <button class="btn btn-block btn-outline-primary" style=" width:30%; display: inline-block">
+                                        <button class="btn btn-block btn-outline-primary" style="width:20%; display: inline-block">
                                             <i class="nav-icon fas fa-pen"></i>
                                         </button>
                                     </a>
                                     <a href="/admin-products/delete/{{$product->id}}">
-                                        <button class="btn btn-block btn-outline-danger"  style=" width:30%; display: inline-block" >
+                                        <button class="btn btn-block btn-outline-danger"  style="width:20%; display: inline-block" >
                                             <i class="nav-icon fas fa-trash"></i>
                                         </button>
                                     </a>
@@ -64,7 +67,7 @@
                         </tbody>
                     </table>
                     <div style="margin-top: 10px; float: right">
-                        {{$data->links()}}
+                        {{$data->withQueryString()->links()}}
                     </div>
                 </div>
                 <!-- /.card-body -->

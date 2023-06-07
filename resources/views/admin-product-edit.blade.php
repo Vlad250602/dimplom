@@ -103,9 +103,19 @@
         <!-- /.card-body -->
         <div class="card-body">
             <div class="form-group">
+                <label for="exampleInputFile">Photo</label><br>
+                <img id="preview-image-before-upload" src="{{ Storage::url('image/products/'.$product->image) }}" style="margin-bottom: 10px; border: 2px dotted gray; width: 300px; height: 300px; background-size: cover">
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="photo" value="{{$product->image}}" name="photo">
+                        <label class="custom-file-label" for="photo">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="name">Product name</label>
                 <input type="text" name="name" class="form-control"
-                       id="name"  value="{{$product->product_name}}" placeholder="Enter name">
+                       id="name" value="{{$product->product_name}}" placeholder="Enter name">
             </div>
             <div class="form-group">
                 <label for="size">Product size</label>
@@ -120,7 +130,7 @@
             <div class="form-group">
                 <label for="discount">Discount,%</label>
                 <input type="text" name="discount" class="form-control"
-                       id="discount"  value="{{$product->discount}}" placeholder="0">
+                       id="discount"  value="{{$product->discount_price}}" placeholder="0">
             </div>
             <div class="form-group">
                 <label for="category">Category</label>
@@ -128,15 +138,6 @@
                     <option value="-1">---</option>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="subcategory">Subcategory</label>
-                <select name="subcategory" class="form-control">
-                    <option value="-1">---</option>
-                    @foreach($subcategories as $sub)
-                        <option value="{{$sub->id}}">{{$sub->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -160,7 +161,7 @@
 @endsection
 
 @push('page_scripts')
-    {{--<script>
+    <script>
         var phoneMask = IMask(
             document.getElementById('phone'), {
                 mask: '+{38} (000) 000 00 00'
@@ -188,5 +189,5 @@
             });
 
         });
-    </script>--}}
+    </script>
 @endpush

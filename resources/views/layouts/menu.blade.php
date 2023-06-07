@@ -19,3 +19,17 @@
         <p>Users</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('admin-orders') }}" class="nav-link {{ Request::is('admin-orders') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-money-check"></i>
+        <p>Orders</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('admin-sliders') }}" class="nav-link {{ Request::is('admin-sliders') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-image"></i>
+        <p>Sliders</p>
+    </a>
+</li>

@@ -13,6 +13,9 @@ class CartController extends Controller
 {
     public function index()
     {
+        if(!Auth::user()){
+            return redirect()->route('login');
+        }
         $products = $this->order_products();
         $total = $this->order_total();
 
@@ -21,6 +24,7 @@ class CartController extends Controller
 
     public function add(Request $request, $id)
     {
+
         if(!Auth::user()){
             return redirect()->route('login');
         }
@@ -41,9 +45,6 @@ class CartController extends Controller
 
         }
         $order = Order::where('user_id' ,$user_id)->where('status', 'new')->first();
-        /*$order_items = new Order_items();
-        $order_items->order_id = $order->id;
-        $order_items->product_id = $id;*/
 
         $countOfProductInCart = DB::table('products')
             ->select('products.id','count', DB::raw('count(products.id) as count_in_cart'))
@@ -59,11 +60,17 @@ class CartController extends Controller
             $countInCart = $countOfProductInCart->count_in_cart;
         }
 
-
         if(($product->count - $countInCart - 1) < 0){
-            return redirect()->route('main');
+            return redirect()->route('catalog')->with('error', 'Your request exceeds the remaining quantity of this product');
         }
-        DB::insert('insert into order_items (order_id, product_id, price_stamp) values (?, ?, ?)', [$order->id, $id, $product->price]);
+
+        if($product->discount_price > 0 ){
+            $price = $product->discount_price;
+        } else {
+            $price = $product->price;
+        }
+
+        DB::insert('insert into order_items (order_id, product_id, price_stamp) values (?, ?, ?)', [$order->id, $id, $price]);
         //$order_items->save();
 
         return redirect()->route('cart');
@@ -84,7 +91,8 @@ class CartController extends Controller
             'town' => 'required',
             'address' => 'required',
             'country' => 'required',
-            'pay_type' => 'required'
+            'pay_type' => 'required',
+            'phone' => 'required'
         ]);
 
         $user_id = Auth::user()->id;
@@ -106,6 +114,7 @@ class CartController extends Controller
         foreach ($cartProducts as $cartProduct){
             $product = Product::where('id', $cartProduct->prod_id)->first();
             $product->count = $cartProduct->count - $cartProduct->count_in_cart;
+            $product->total_sales += $cartProduct->count_in_cart;
             $product->save();
         }
 
@@ -116,11 +125,45 @@ class CartController extends Controller
         $order->address = $request->address;
         $order->pay_type = $request->pay_type;
         $order->status = 'processed';
+        $order->phone = $request->phone;
         $order->created_at = now();
 
         $order->save();
 
-        return redirect()->route('main');
+        return redirect()->route('thank');
     }
 
+    public function remove($id){
+        $user_id = Auth::user()->id;
+        $order = Order::where('user_id' ,$user_id)->where('status', 'new')->first();
+
+        $order_item = Order_items::where('product_id', '=' ,$id)->where('order_id','=', $order->id)->first();
+        $order_item->delete();
+        return redirect()->route('cart');
+
+    }
+
+    public function clear(){
+        $user_id = Auth::user()->id;
+        $order = Order::where('user_id' ,$user_id)->where('status', 'new')->first();
+
+        $order_items = Order_items::where('order_id', '=', $order->id)->get();
+        foreach ($order_items as $item){
+            $item->delete();
+        }
+
+        return redirect()->route('cart');
+    }
+
+    public function thank(){
+
+        $products = $this->order_products();
+        $total = $this->order_total();
+
+        $user_id = Auth::user()->id;
+
+        $id = Order::where('user_id', '=', $user_id)->where('status', '=', 'processed')->orderBy('created_at', 'desc')->first();
+
+        return view('thank',['products' => $products, 'total' => $total, 'id' => $id]);
+    }
 }

@@ -10,7 +10,7 @@
                         <div class="page-header-content">
                             <nav class="breadcrumb-area">
                                 <ul class="breadcrumb">
-                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="{{route('main')}}">Home</a></li>
                                     <li class="breadcrumb-sep">/</li>
                                     <li>Account</li>
                                 </ul>

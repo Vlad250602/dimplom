@@ -8,53 +8,41 @@
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
-
+                    <a class="btn btn-primary" href="{{route('admin-sliders-create')}}" style="margin-bottom: 10px">
+                        Add slider
+                    </a>
                     {{--
                     <a href=""><button class="btn btn-block btn-primary" style=" width: 150px; margin-top: -5px; z-index: 100">Add product</button></a>
 --}}
                     <table id="productTable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Order id</th>
-                            <th>Created by</th>
+                            <th>Product id</th>
+                            <th>Product</th>
+                            <th>Discount price</th>
+                            <th>Discount</th>
                             <th>Status</th>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Country</th>
-                            <th>Town</th>
-                            <th>Address</th>
-                            <th>Pay type</th>
-                            <th>Created at</th>
+                            <th>Description</th>
                             <th>Info</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data as $order)
+                        @foreach($data as $slider)
                             <tr>
-                                <td>{{$order->id}}</td>
-                                <td>{{$users->where('id', $order->user_id)->first()->name
-                                    . ' ' .  $users->where('id', $order->user_id)->first()->surname}}</td>
-                                @if ($order->status == 'completed')
-                                    <td style="color: limegreen">{{$order->status}}</td>
-                                @elseif ($order->status == 'processed')
-                                    <td style="color: #f1c40f">{{$order->status}}</td>
+                                <td>{{$slider->slider_id}}</td>
+                                <td>{{$slider->product_name}}</td>
+                                <td>{{$slider->discount_price}}</td>
+                                <td>{{intval(100 - $slider->discount_price / $slider->price * 100)}}%</td>
+                                @if ($slider->status == 'active')
+                                    <td style="color: limegreen">{{$slider->status}}</td>
                                 @else
-                                    <td>{{$order->status}}</td>
+                                    <td style="color: orangered">{{$slider->status}}</td>
                                 @endif
-                                <td>{{$order->name}}</td>
-                                <td>{{$order->surname}}</td>
-                                <td>{{$order->country}}</td>
-                                <td>{{$order->town}}</td>
-                                <td>{{$order->address}}</td>
-                                <td>{{$order->pay_type}}</td>
-                                <td>{{$order->created_at}}</td>
-                                <td style="text-align: center">
-                                    <a href="/admin-orders/details/{{$order->id}}">
-                                        <button class="btn btn-block btn-outline-secondary">
-                                            <i class="nav-icon fas fa-info"></i>
-                                        </button>
-                                    </a>
-                                    </a>
+
+                                    <td>{{$slider->slider_description}}</td>
+                                <td>
+                                    <a href="{{route('admin-sliders-status', $slider->slider_id)}}">Status</a>
+                                    <a href="{{route('admin-sliders-destroy', $slider->slider_id)}}">Delete</a>
                                 </td>
                             </tr>
 

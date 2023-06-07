@@ -13,7 +13,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function order_products(){
+    protected function order_products(){
         $user_id = Auth::user()->id;
         $order = Order::where('user_id' ,$user_id)->where('status', 'new')->first();
         if (!$order){
@@ -31,21 +31,21 @@ class Controller extends BaseController
         }
 
         $products = DB::table('products')
-            ->select('product_name','price','size', DB::raw('count(product_id) as count'))
+            ->select('products.id as id','product_name','price_stamp as price', 'image' ,'size', DB::raw('count(product_id) as count'))
             ->rightJoin('order_items','products.id', '=', 'product_id')
             ->where('order_id', $order->id)
-            ->groupBy('product_name','price','size')
+            ->groupBy('id','product_name','price_stamp','size', 'image')
             ->get();
         return $products;
     }
 
-    public function order_total(){
+    protected function order_total(){
         $user_id = Auth::user()->id;
         $order = Order::where('user_id' ,$user_id)->where('status', 'new')->first();
         $total = DB::table('products')
-            ->select('price')
+            ->select('price_stamp as price')
             ->rightJoin('order_items','products.id', '=', 'product_id')
-            ->where('order_id', $order->id)
+            ->where('order_id', '=' ,$order->id)
             ->get();
         return $total;
     }

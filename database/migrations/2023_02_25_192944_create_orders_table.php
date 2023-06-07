@@ -17,10 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name')->default('');
             $table->string('surname')->default('');
-            $table->string('country');
-            $table->string('town');
-            $table->string('address');
-            $table->string('pay_type');
+            $table->string('phone')->default('');
+            $table->string('country')->default('');
+            $table->string('town')->default('');
+            $table->string('address')->default('');
+            $table->string('pay_type')->default('');
             $table->text('description');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use App\Models\subcategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
@@ -20,11 +19,6 @@ class ProductSeeder extends Seeder
             'category_name' => '1',
         ]);
 
-        DB::table('subcategories')->insert([
-            'name' => '1',
-            'category_id' => 1,
-        ]);
-
         $faker = Faker::create();
         foreach (range(1,100) as $item) {
             DB::table('products')->insert([
@@ -35,9 +29,8 @@ class ProductSeeder extends Seeder
                 'count' => 10,
                 'total_sales' => 0,
                 'price' => rand(1,10)*100,
-                'discount' => 0,
+                'discount_price' => 0,
                 'category_id' => 1,
-                'subcategory_id' => 1,
                 'admin_created_id' => 1,
                 'admin_updated_id' => 1,
             ]);

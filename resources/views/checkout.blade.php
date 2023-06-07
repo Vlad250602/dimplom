@@ -42,7 +42,10 @@
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+
     <![endif]-->
+
 </head>
 
 <body>
@@ -72,13 +75,13 @@
                         <div class="col-lg-7">
                             <div class="edit-checkout-head">
                                 <div class="header-logo-area">
-                                    <a href="index.html">
-                                        <img class="logo-main" src="assets/img/logo.png" alt="Logo">
+                                    <a href="{{route('main')}}">
+                                        <img class="logo-main" src="{{asset('img/logo.png')}}" alt="Logo">
                                     </a>
                                 </div>
                                 <div class="breadcrumb-area">
                                     <ul>
-                                        <li><a class="active" href="cart.html">Cart</a><i class="fa fa-angle-right"></i>
+                                        <li><a class="active" href="{{route('cart')}}">Cart</a><i class="fa fa-angle-right"></i>
                                         </li>
                                         <li>Payment</li>
                                     </ul>
@@ -117,6 +120,13 @@
                                                     <input type="text" class="form-control" id="surname" name="surname"
                                                            placeholder="Last name" value="{{old('surname')}}">
                                                     <label for="surname">Last name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="phone" name="phone"
+                                                           placeholder="Phone" value="{{old('phone')}}">
+                                                    <label for="phone">Phone</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -162,7 +172,7 @@
 
                                             <div class="col-12">
                                                 <div class="btn-box">
-                                                    <button class="btn-shipping" type="submit" href="shop.html">Confirm</button>
+                                                    <button class="btn-shipping" type="submit" >Confirm</button>
                                                     <a class="btn-return" href="{{route('cart')}}">Return to cart</a>
                                                 </div>
                                             </div>
@@ -179,7 +189,7 @@
                                     @foreach($products as $product)
                                         <div class="shipping-cart-item">
                                             <div class="thumb">
-                                                <img src="{{asset('img/shop/cart/mini2.jpg')}}" alt="">
+                                                <img src="{{($product->image)? Storage::url('image/products/' . $product->image) : asset('img/shop/cart/mini2.jpg')}}" alt="">
                                                 <span class="quantity">{{$product->count}}</span>
                                             </div>
                                             <div class="content">
@@ -304,3 +314,5 @@
 </body>
 
 </html>
+
+

@@ -103,6 +103,16 @@
         <!-- /.card-body -->
         <div class="card-body">
             <div class="form-group">
+                <label for="exampleInputFile" >Photo</label><br>
+                <img id="preview-image-before-upload" src="" style="margin-bottom: 10px; border: 2px dotted gray; width: 300px; height: 300px; background-size: cover">
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="photo" value="" name="photo">
+                        <label class="custom-file-label" for="photo">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="name">Product name</label>
                 <input type="text" name="name" class="form-control" id="name"
                        @if ($errors->has('name'))
@@ -135,7 +145,10 @@
                        @if ($errors->has('discount'))
                            value="{{old('discount')}}"
                        style="border: 1px solid red"
+                       @else
+                           value="0"
                        @endif
+
                        placeholder="0">
             </div>
             <div class="form-group">
@@ -144,15 +157,6 @@
                     <option value="-1">---</option>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="subcategory">Subcategory</label>
-                <select name="subcategory" class="form-control">
-                    <option value="-1">---</option>
-                    @foreach($subcategories as $sub)
-                        <option value="{{$sub->id}}">{{$sub->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -182,9 +186,8 @@
                 mask: '+{38} (000) 000 00 00'
             });
     </script>
-
+--}}
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
     <script type="text/javascript">
 
         $(document).ready(function (e) {
@@ -204,5 +207,5 @@
             });
 
         });
-    </script>--}}
+    </script>
 @endpush

@@ -24,6 +24,7 @@ class MainController extends Controller
 
         $products = $this->order_products();
         $total = $this->order_total();
+
         return view('index', ['total' => $total , 'products' => $products, 'sliders' => $sliders, 'best_sellers' => $best_sellers, 'new_arrivals' => $new_arrivals]);
     }
 

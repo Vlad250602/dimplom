@@ -46,12 +46,12 @@
                                     </form>
                                 </td>
                                 <td class="product-thumb">
-                                    <a href="{{route('product-details', $item->id)}}">
-                                        <img src="{{($item->image)? Storage::url('image/products/' . $item->image) : asset('img/shop/product-mini/1.jpg')}}" alt="Image-HasTech">
+                                    <a href="{{route('product-details', $item->product_id)}}">
+                                        <img style="width: 90px; height: 90px" src="{{($item->image)? Storage::url('image/products/' . $item->image) : asset('img/shop/product-mini/1.jpg')}}" alt="Image-HasTech">
                                     </a>
                                 </td>
                                 <td class="product-name">
-                                    <h4 class="title"><a href="single-product.html">{{$item->product_name}}</a></h4>
+                                    <h4 class="title"><a href="{{route('product-details', $item->product_id)}}">{{ $item->product_name . ' ' . $item->size . 'm'}}</a></h4>
                                 </td>
                                 <td class="product-stock-status">
                                     @if($item->count > 0)

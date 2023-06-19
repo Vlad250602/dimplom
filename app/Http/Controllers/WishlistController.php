@@ -30,10 +30,10 @@ class WishlistController extends Controller
 
         $items = Product::where('id', '>', '100')->get();
 
-       /* foreach ($items as $item) {
-            $item->description = 'Пластикові ніжки в коплекті. Доставка впродовж 3-7 днів.';
+        foreach ($items as $item) {
+            $item->description = 'Plastic legs included. Delivery within 3-7 days.';
             $item->save();
-        }*/
+        }
 
 
         if(!Auth::user()){

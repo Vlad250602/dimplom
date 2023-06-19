@@ -29,7 +29,7 @@
                         <tbody>
                         @foreach($data as $slider)
                             <tr>
-                                <td>{{$slider->slider_id}}</td>
+                                <td>{{$slider->id}}</td>
                                 <td>{{$slider->product_name}}</td>
                                 <td>{{$slider->discount_price}}</td>
                                 <td>{{intval(100 - $slider->discount_price / $slider->price * 100)}}%</td>

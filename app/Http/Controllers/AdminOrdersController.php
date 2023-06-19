@@ -17,7 +17,7 @@ class AdminOrdersController extends Controller
             return redirect()->route('main');
         }
 
-        return view('admin-orders', ['data' => Order::paginate(10), 'users' => User::all()]);
+        return view('admin-orders', ['data' => Order::where('status', '!=', 'new')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->paginate(10), 'users' => User::all()]);
     }
 
     public function details($id){
